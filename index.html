@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>اوگر | OUGER</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap');
+
+:root {
+  --bg: #0c0814;
+  --panel: #191225;
+  --border: #39284b;
+  --text: #fff7ff;
+  --muted: #b7a8c9;
+  --pink: #ff559d;
+  --purple: #a477ff;
+  --gold: #ffce7a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Vazirmatn, Tahoma, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, #40204e, transparent 35%),
+    var(--bg);
+  min-height: 100vh;
+}
+
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+.hidden { display: none !important; }
+
+button {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 11px 16px;
+  color: white;
+  background: #ffffff0c;
+}
+
+.primary {
+  background: linear-gradient(110deg, var(--pink), var(--purple));
+  border: none;
+  font-weight: 700;
+}
+
+.gold {
+  background: linear-gradient(110deg, #ffce7a, #ff8ca4);
+  color: #29132e;
+  border: none;
+  font-weight: 800;
+}
+
+input, select {
+  width: 100%;
+  background: #0d0915;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  color: white;
+  padding: 12px;
+  outline: none;
+}
+
+label {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0 0 7px;
+}
+
+.field { margin-bottom: 15px; }
+.muted { color: var(--muted); font-size: 13px; line-height: 2; }
+
+.login-screen {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.login-card {
+  width: min(420px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 30px;
+  text-align: center;
+}
+
+.logo {
+  font-size: 35px;
+  font-weight: 800;
+  color: var(--pink);
+}
+
+.login-card input { margin: 15px 0; text-align: center; }
+.wide { width: 100%; }
+.error { color: #ff718e; font-size: 13px; min-height: 22px; }
+
+.app {
+  max-width: 1250px;
+  margin: auto;
+  padding: 18px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.brand { font-size: 25px; font-weight: 800; }
+.brand span { color: var(--pink); }
+
+.layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: 18px;
+}
+
+.sidebar, .panel, .page-header, .feature {
+  background: #171020ed;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 17px;
+}
+
+.sidebar {
+  align-self: start;
+  position: sticky;
+  top: 12px;
+}
+
+.nav {
+  width: 100%;
+  text-align: right;
+  display: block;
+  margin: 5px 0;
+  border-color: transparent;
+  color: var(--muted);
+}
+
+.nav.active {
+  background: #a477ff20;
+  border-color: #a477ff60;
+  color: white;
+}
+
+.content { min-width: 0; }
+.page { display: none; }
+.page.active { display: block; }
+
+.hero {
+  padding: 30px;
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  background: linear-gradient(120deg, #2a1639, #151020);
+}
+
+.hero h1 { font-size: clamp(28px, 5vw, 45px); }
+.gradient {
+  background: linear-gradient(90deg, #ff75b5, #b79aff);
+  color: transparent;
+  background-clip: text;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.grid3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+}
+
+.feature { margin-top: 15px; }
+.feature h3 { margin-top: 0; }
+.page-header { margin-bottom: 15px; }
+.page-header h1 { margin: 0 0 8px; font-size: 25px; }
+.panel { margin-bottom: 15px; }
+.actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 15px; }
+
+.profiles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.person {
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  overflow: hidden;
+  background: #100b18;
+}
+
+.person img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.person-info { padding: 12px; }
+.person-info p { color: var(--muted); font-size: 12px; }
+
+.wallet {
+  direction: ltr;
+  overflow-wrap: anywhere;
+  padding: 14px;
+  background: #0c0812;
+  border: 1px dashed #70558c;
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 2;
+}
+
+.notice {
+  padding: 13px;
+  margin-top: 14px;
+  border-radius: 12px;
+  background: #a477ff13;
+  border: 1px solid #a477ff50;
+  font-size: 13px;
+  line-height: 2;
+}
+
+.status {
+  margin-top: 14px;
+  color: var(--gold);
+  background: #ffce7a12;
+  border: 1px solid #ffce7a55;
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.live {
+  padding: 25px;
+  border-radius: 20px;
+  background: linear-gradient(130deg, #351a37, #1b122a);
+  border: 1px solid #71435f;
+}
+
+.live-screen {
+  display: grid;
+  place-items: center;
+  min-height: 180px;
+  margin: 18px 0;
+  border: 1px dashed #8d648d;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.modal-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: #05030bdd;
+  place-items: center;
+  padding: 20px;
+}
+
+.modal-backdrop.open { display: grid; }
+.modal {
+  width: min(400px, 100%);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 25px;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+@media(max-width:850px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position: static; }
+  .nav { width: auto; display: inline-block; }
+}
+
+@media(max-width:600px) {
+  .grid, .grid3, .profiles { grid-template-columns: 1fr; }
+  .hero { padding: 20px; }
+  .person img { height: 220px; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- صفحه ورود -->
+<section class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="logo">◉ OUGER</div>
+    <h1>به اوگر خوش آمدی</h1>
+    <p class="muted">برای ورود رمز عبور را وارد کن.</p>
+
+    <form id="loginForm">
+      <input id="loginPassword" type="password"
+        placeholder="رمز ورود" required>
+      <button class="primary wide" type="submit">ورود به سایت</button>
+      <div class="error" id="loginError"></div>
+    </form>
+  </div>
+</section>
+
+<!-- برنامه اصلی -->
+<div class="app hidden" id="app">
+
+  <header class="topbar">
+    <div class="brand"><span>◉</span> OUGER <small>اوگر</small></div>
+    <div>
+      <button class="gold" onclick="navigate('vip')">✦ عضویت VIP</button>
+      <button onclick="logout()">خروج</button>
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <aside class="sidebar">
+      <p class="muted">منوی اصلی</p>
+      <button class="nav active" data-page="home" onclick="navigate('home')">🏠 صفحه اصلی</button>
+      <button class="nav" data-page="random" onclick="navigate('random')">🎲 چت تصادفی</button>
+      <button class="nav" data-page="interests" onclick="navigate('interests')">🔎 جستجوی علایق</button>
+      <button class="nav" data-page="live" onclick="navigate('live')">🎙️ اتاق لایو میسترس</button>
+      <button class="nav" data-page="vip" onclick="navigate('vip')">✦ بخش VIP</button>
+      <button class="nav" data-page="purchase" onclick="navigate('purchase')">💎 خرید اشتراک</button>
+      <button class="nav" data-page="profile" onclick="navigate('profile')">👤 پروفایل من</button>
+
+      <div class="notice">به اوگر خوش آمدی! در نسخه نهایی می‌توان چت زنده و حساب کاربری واقعی اضافه کرد.</div>
+    </aside>
+
+    <main class="content">
+
+      <!-- خانه -->
+      <section class="page active" id="page-home">
+        <div class="hero">
+          <p>✦ دنیای ارتباطات ناشناس</p>
+          <h1>آدم‌های جدید را <span class="gradient">کشف کن.</span></h1>
+          <p class="muted">با اوگر وارد دنیایی از گفت‌وگوهای تازه شو.</p>
+          <div class="actions">
+            <button class="primary" onclick="openGate('random')">🎲 شروع چت تصادفی</button>
+            <button onclick="navigate('interests')">🔎 جستجو بر اساس علایق</button>
+          </div>
+        </div>
+
+        <div class="grid3">
+          <div class="feature"><h3>🎲 چت تصادفی</h3><p class="muted">برای پیدا کردن یک گفت‌وگوی جدید.</p><button onclick="openGate('random')">شروع</button></div>
+          <div class="feature"><h3>🎙️ اتاق لایو</h3><p class="muted">بخش ویژه اتاق لایو میسترس.</p><button onclick="openGate('live')">ورود</button></div>
+          <div class="feature"><h3>💎 اشتراک VIP</h3><p class="muted">مشاهده بخش ویژه و خرید اشتراک.</p><button onclick="navigate('purchase')">مشاهده</button></div>
+        </div>
+      </section>
+
+      <!-- چت تصادفی -->
+      <section class="page" id="page-random">
+        <div class="page-header">
+          <h1>🎲 چت تصادفی</h1>
+          <p class="muted">شروع جستجوی یک گفت‌وگوی جدید.</p>
+        </div>
+        <div class="panel">
+          <h3>آماده‌ای آشنا شوی؟</h3>
+          <p class="muted">با زدن دکمه زیر، وضعیت جستجو نمایش داده می‌شود.</p>
+          <div class="actions">
+            <button class="primary" onclick="startRandom()">شروع جستجو</button>
+            <button onclick="stopRandom()">توقف</button>
+          </div>
+          <div class="notice hidden" id="randomStatus">در حال جستجو...</div>
+          <p class="muted">توجه: اتصال به کاربران واقعی به سرور و سیستم چت نیاز دارد.</p>
+        </div>
+      </section>
+
+      <!-- فیلتر علایق -->
+      <section class="page" id="page-interests">
+        <div class="page-header">
+          <h1>🔎 جستجو بر اساس علایق</h1>
+          <p class="muted">فیلترها را تنظیم کن و پروفایل‌های نمونه را ببین.</p>
+        </div>
+
+        <div class="panel">
+          <div class="grid">
+            <div class="field">
+              <label>گرایش</label>
+              <select id="orientation">
+                <option value="">همه</option>
+                <option>دگرجنس‌گرا</option>
+                <option>همجنس‌گرا</option>
+                <option>دوجنس‌گرا</option>
+                <option>ترجیح می‌دهم نگویم</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>محدوده سنی</label>
+              <select id="age">
+                <option value="">همه سنین بزرگسال</option>
+                <option>۱۸ تا ۲۵</option>
+                <option>۲۶ تا ۳۵</option>
+                <option>۳۶ به بالا</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>شهر</label>
+              <input id="city" placeholder="مثلاً استانبول">
+            </div>
+
+            <div class="field">
+              <label>قد</label>
+              <select id="height">
+                <option value="">همه</option>
+                <option>زیر ۱۶۰</option>
+                <option>۱۶۰ تا ۱۷۵</option>
+                <option>۱۷۶ به بالا</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>جنسیت</label>
+              <select id="gender">
+                <option value="">همه</option>
+                <option>زن</option>
+                <option>مرد</option>
+                <option>غیردودویی</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="primary" onclick="runSearch()">جستجو</button>
+            <button onclick="resetFilters()">پاک کردن فیلترها</button>
+          </div>
+
+          <div id="interestResults" class="hidden">
+            <div class="notice" id="interestMessage">در حال جستجو...</div>
+            <div class="profiles" id="profileResults"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- اتاق لایو -->
+      <section class="page" id="page-live">
+        <div class="live">
+          <p>● LIVE ROOM</p>
+          <h1>🎙️ اتاق لایو میسترس</h1>
+          <p class="muted">به بخش ویژه اتاق لایو خوش آمدی.</p>
+          <div class="live-screen">
+            <div>
+              <div style="font-size:45px">🎙️</div>
+              <b id="liveStatus">اتاق آماده ورود است</b>
+              <p class="muted">پخش زنده در این نسخه فعال نیست.</p>
+            </div>
+          </div>
+          <button class="primary" onclick="openGate('live')">🔒 ورود به اتاق</button>
+        </div>
+      </section>
+
+      <!-- VIP -->
+      <section class="page" id="page-vip">
+        <div class="page-header">
+          <h1>✦ عضویت VIP</h1>
+          <p class="muted">بخش ویژه کاربران اوگر.</p>
+        </div>
+        <div class="panel">
+          <h2>تجربه ویژه اوگر</h2>
+          <h1 style="color:var(--gold)">VIP ✦</h1>
+          <ul class="muted">
+            <li>دسترسی به بخش VIP</li>
+            <li>امکان افزودن امکانات ویژه در نسخه نهایی</li>
+            <li>مدیریت اشتراک کاربران</li>
+          </ul>
+          <div class="actions">
+            <button class="gold" onclick="openGate('vip')">🔒 ورود VIP</button>
+            <button onclick="navigate('purchase')">خرید اشتراک</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- خرید اشتراک -->
+      <section class="page" id="page-purchase">
+        <div class="page-header">
+          <h1>💎 خرید اشتراک</h1>
+          <p class="muted">پرداخت نمایشی از طریق کیف پول TON.</p>
+        </div>
+        <div class="panel">
+          <h3>آدرس کیف پول TON</h3>
+          <p class="muted">پیش از پرداخت، شبکه و آدرس کیف پول را بررسی کن.</p>
+          <div class="wallet" id="walletAddress">UQC60I-MCcAjq2EB2voZTByspcg0UUy_7WS_IoC5S-B6nNpo</div>
+          <div class="actions">
+            <button class="primary" onclick="copyWallet()">کپی آدرس</button>
+            <button onclick="showPaymentPending()">پرداخت را انجام دادم</button>
+          </div>
+          <div class="status hidden" id="paymentPending">
+            ⏳ لطفاً منتظر بمانید؛ پرداخت شما در انتظار بررسی است.
+          </div>
+          <div class="notice">این نسخه پرداخت را به‌صورت خودکار تأیید نمی‌کند. برای تأیید واقعی، اتصال به شبکه TON و سرور امن لازم است.</div>
+        </div>
+      </section>
+
+      <!-- پروفایل -->
+      <section class="page" id="page-profile">
+        <div class="page-header">
+          <h1>👤 پروفایل من</h1>
+          <p class="muted">اطلاعات نمایشی پروفایل خود را وارد کن.</p>
+        </div>
+        <div class="panel">
+          <div class="grid">
+            <div class="field">
+              <label>نام نمایشی</label>
+              <input id="myName" placeholder="نام مستعار">
+            </div>
+            <div class="field">
+              <label>سن (۱۸ سال به بالا)</label>
+              <input id="myAge" type="number" min="18" max="99" placeholder="سن">
+            </div>
+            <div class="field">
+              <label>شهر</label>
+              <input id="myCity" placeholder="شهر شما">
+            </div>
+            <div class="field">
+              <label>جنسیت</label>
+              <select id="myGender">
+                <option>ترجیح می‌دهم نگویم</option>
+                <option>زن</option>
+                <option>مرد</option>
+                <option>غیردودویی</option>
+              </select>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary" onclick="saveProfile()">ذخیره نمایشی</button>
+          </div>
+          <p class="muted" id="profileMessage"></p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>اوگر · نسخه نمایشی رابط کاربری</footer>
+</div>
+
+<!-- پنجره رمز بخش‌ها -->
+<div class="modal-backdrop" id="gateModal">
+  <div class="modal">
+    <h2 id="gateTitle">ورود به بخش</h2>
+    <p class="muted">برای ادامه رمز عبور را وارد کن.</p>
+    <form id="gateForm">
+      <div class="field">
+        <input id="gatePassword" type="password" placeholder="رمز عبور" required>
+      </div>
+      <button class="primary wide" type="submit">تأیید و ادامه</button>
+      <p class="error" id="gateError"></p>
+    </form>
+    <button onclick="closeGate()">بستن</button>
+  </div>
+</div>
+
+<script>
+const DEMO_PASSWORD = 'admin';
+let pendingAction = '';
+
+const $ = id => document.getElementById(id);
+
+// ورود اولیه
+$('loginForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  if ($('loginPassword').value !== DEMO_PASSWORD) {
+    $('loginError').textContent = 'رمز عبور اشتباه است.';
+    return;
+  }
+
+  $('loginScreen').classList.add('hidden');
+  $('app').classList.remove('hidden');
+  $('loginError').textContent = '';
+  navigate('home');
+});
+
+function logout() {
+  $('app').classList.add('hidden');
+  $('loginScreen').classList.remove('hidden');
+  $('loginPassword').value = '';
+}
+
+// جابه‌جایی صفحات
+function navigate(page) {
+  document.querySelectorAll('.page').forEach(element => {
+    element.classList.remove('active');
+  });
+
+  const target = $('page-' + page);
+  if (target) target.classList.add('active');
+
+  document.querySelectorAll('.nav').forEach(button => {
+    button.classList.toggle('active', button.dataset.page === page);
+  });
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// رمز بخش‌های قفل‌شده
+function openGate(action) {
+  pendingAction = action;
+
+  const names = {
+    random: 'ورود به چت تصادفی',
+    live: 'ورود به اتاق لایو میسترس',
+    vip: 'ورود به بخش VIP'
+  };
+
+  $('gateTitle').textContent = names[action] || 'ورود به بخش';
+  $('gatePassword').value = '';
+  $('gateError').textContent = '';
+  $('gateModal').classList.add('open');
+}
+
+function closeGate() {
+  $('gateModal').classList.remove('open');
+}
+
+$('gateForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+
+  if ($('gatePassword').value !== DEMO_PASSWORD) {
+    $('gateError').textContent = 'رمز عبور اشتباه است.';
+    return;
+  }
+
+  const action = pendingAction;
+  closeGate();
+  navigate(action);
+
+  if (action === 'random') startRandom();
+
+  if (action === 'live') {
+    $('liveStatus').textContent = 'دسترسی نمایشی باز شد؛ پخش زنده متصل نیست.';
+  }
+});
+
+// چت تصادفی نمایشی
+function startRandom() {
+  $('randomStatus').classList.remove('hidden');
+  $('randomStatus').textContent = '⏳ در حال جستجو...';
+}
+
+function stopRandom() {
+  $('randomStatus').classList.add('hidden');
+}
+
+// جستجوی پروفایل‌های نمونه
+function runSearch() {
+  $('interestResults').classList.remove('hidden');
+  $('interestMessage').textContent = 'در حال جستجو...';
+
+  setTimeout(function() {
+    const city = $('city').value.trim() || 'تهران';
+
+    const people = [
+      {
+        name: 'آرین',
+        age: 26,
+        city: city,
+        gender: 'مرد',
+        image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80'
+      },
+      {
+        name: 'رها',
+        age: 24,
+        city: city,
+        gender: 'زن',
+        image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80'
+      },
+      {
+        name: 'سام',
+        age: 31,
+        city: city,
+        gender: 'مرد',
+        image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80'
+      }
+    ];
+
+    const selectedGender = $('gender').value;
+    const filtered = selectedGender
+      ? people.filter(person => person.gender === selectedGender)
+      : people;
+
+    $('interestMessage').textContent =
+      'پروفایل‌های نمونه؛ این افراد کاربران واقعی نیستند.';
+
+    $('profileResults').innerHTML = filtered.map(person => `
+      <article class="person">
+        <img src="${person.image}" alt="تصویر نمونه">
+        <div class="person-info">
+          <strong>${person.name} · ${person.age} سال</strong>
+          <p>📍 ${person.city}</p>
+          <p>${person.gender}</p>
+        </div>
+      </article>
+    `).join('');
+  }, 700);
+}
+
+function resetFilters() {
+  ['orientation', 'age', 'city', 'height', 'gender'].forEach(id => {
+    $(id).value = '';
+  });
+
+  $('interestResults').classList.add('hidden');
+  $('profileResults').innerHTML = '';
+}
+
+// کپی آدرس کیف پول
+async function copyWallet() {
+  const address = $('walletAddress').textContent.trim();
+
+  try {
+    await navigator.clipboard.writeText(address);
+    alert('آدرس کیف پول کپی شد.');
+  } catch (error) {
+    const input = document.createElement('textarea');
+    input.value = address;
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    input.remove();
+    alert('آدرس کیف پول کپی شد.');
+  }
+}
+
+function showPaymentPending() {
+  $('paymentPending').classList.remove('hidden');
+}
+
+// ذخیره نمایشی پروفایل
+function saveProfile() {
+  const age = Number($('myAge').value);
+
+  if (!$('myAge').value || age < 18 || age > 99) {
+    $('profileMessage').textContent =
+      'لطفاً سن معتبر بین ۱۸ تا ۹۹ سال وارد کن.';
+    return;
+  }
+
+  $('profileMessage').textContent =
+    'اطلاعات بررسی شد؛ در این نسخه اطلاعات روی سرور ذخیره نمی‌شود.';
+}
+</script>
+
+</body>
+</html>
